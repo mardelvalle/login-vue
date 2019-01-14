@@ -20,14 +20,6 @@ var db = mongodb_conn_module.connect();
 var Post = require("../models/post");
 
 
-const authCheck = (req, res, next) => {
-	if(!req.user){
-		res.redirect('http://localhost:9082/signout');
-	} else {
-		next()
-	}
-}
-
 app.use(cookieSession({
 	maxAge: 7 * 24 * 60 * 60 * 1000,
 	keys: [keys.session.cookieKey]
@@ -35,6 +27,16 @@ app.use(cookieSession({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+const authCheck = (req, res, next) => {
+	console.log("reeeee" + req.user)
+	if(!req.user){
+		res.redirect('http://localhost:9080/signout');
+	} else {
+		next()
+	}
+}
+
 
 mongoose.connect(keys.mongodb.dbURI, () => {
     console.log('connect');
@@ -45,8 +47,6 @@ app.use('/auth', authRoutes)
 app.get('/signout', (req, res) => {
 	res.send(
 		[{
-		  title: "Hello World!",
-		  description: "Hi there! How are you?",
 		  authentication: false
 		}]
 	  )
@@ -54,15 +54,17 @@ app.get('/signout', (req, res) => {
 
 
 app.get('/posts', (req, res) => {
+	console.log("new" + res.user)
   Post.find({}, 'title description', function (error, posts) {
 	  if (error) { console.error(error); }
 	  res.send({
 			posts: posts
 		})
 	}).sort({_id:-1})
+	console.log("re" + req.user)
 })
 
-app.post('/add_post', (req, res) => {
+app.post('/add_post', authCheck, (req, res) => {
 	var db = req.db;
 	var title = req.body.title;
 	var description = req.body.description;
@@ -80,16 +82,12 @@ app.post('/add_post', (req, res) => {
 		})
 	})
 })
-app.get('/loggin', authCheck, (req, res) => {
-	res.send(
-		[{
-		  title: "Hello World!",
-		  description: "Hi there! How are you?"
-		}]
-	  )
+app.get('/loggin', (req, res) => {
+	req.logout();
+	res.redirect('/');
 })
 
-app.put('/posts/:id', (req, res) => {
+app.put('/posts/:id', authCheck, (req, res) => {
 	var db = req.db;
 	Post.findById(req.params.id, 'title description', function (error, post) {
 	  if (error) { console.error(error); }
@@ -107,7 +105,7 @@ app.put('/posts/:id', (req, res) => {
 	})
 })
 
-app.delete('/posts/:id', (req, res) => {
+app.delete('/posts/:id', authCheck, (req, res) => {
 	var db = req.db;
 	Post.remove({
 		_id: req.params.id
@@ -120,7 +118,7 @@ app.delete('/posts/:id', (req, res) => {
 	})
 })
 
-app.get('/post/:id', (req, res) => {
+app.get('/post/:id', authCheck, (req, res) => {
 	var db = req.db;
 	Post.findById(req.params.id, 'title description', function (error, post) {
 	  if (error) { console.error(error); }

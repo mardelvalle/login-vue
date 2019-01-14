@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import PostsService from '@/services/PostsService'
 export default {
   name: 'addpost',
@@ -24,6 +25,28 @@ export default {
       title: '',
       description: ''
     }
+  },
+  created () {
+    axios.get(`http://localhost:9082/posts`)
+      .then(response => {
+        if (response.data[0].authentication === false) {
+          console.log(this + "thing")
+          // this.$router.push({
+          //   name: 'signout'
+          // })
+        } else {
+          console.log(this + "pwen")
+          this.posts = response.data
+        }
+      })
+      .catch(e => {
+        this.errors.push(e)
+        // if (e.response.status === 401) {
+        //   this.$router.push({
+        //     name: 'signout'
+        //   })
+        // }
+      })
   },
   methods: {
     async addPost () {

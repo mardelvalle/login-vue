@@ -12,9 +12,8 @@
             </form> -->
             <h3>Or use Google:</h3>
             <button class="google-btn btn btn-info log" @click="handleLogin()">Google+</button>
-            <a href='https://accounts.google.com/signin/oauth/identifier?client_id=856193954105-93249jrjql0dnv3bkii5fb1a59geidkr.apps.googleusercontent.com&as=kDWnQUm6Sv13wr05zaD_Pw&destination=http%3A%2F%2Flocalhost%3A8081&approval_state=!ChRwSmJEeTZtZ2NYeTY5VmprNF9RNhIfQXhqZjdTUVVuQjBac0NEZU1wUEotOVlaSlhuTGZoWQ%E2%88%99APNbktkAAAAAXCVXiDUdXAtOnRTJhN5gJB7nNG9nJTlT&oauthgdpr=1&xsrfsig=AHgIfE_IWnx3zi5kfXI7dNRLrLkQV0uA6g&flowName=GeneralOAuthFlow'</a>
+            <!-- <a href='https://accounts.google.com/signin/oauth/identifier?client_id=856193954105-93249jrjql0dnv3bkii5fb1a59geidkr.apps.googleusercontent.com&as=kDWnQUm6Sv13wr05zaD_Pw&destination=http%3A%2F%2Flocalhost%3A8081&approval_state=!ChRwSmJEeTZtZ2NYeTY5VmprNF9RNhIfQXhqZjdTUVVuQjBac0NEZU1wUEotOVlaSlhuTGZoWQ%E2%88%99APNbktkAAAAAXCVXiDUdXAtOnRTJhN5gJB7nNG9nJTlT&oauthgdpr=1&xsrfsig=AHgIfE_IWnx3zi5kfXI7dNRLrLkQV0uA6g&flowName=GeneralOAuthFlow'</a> -->
         </main>
-    
         <div v-for="signout in signout" :key="signout.id">
             <p>
                 <span><b>{{ signout.title }}</b></span><br />
