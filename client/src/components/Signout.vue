@@ -1,15 +1,15 @@
 <template>
   <div class="hello">
         <main>
-            <!-- <form class="login" @submit.prevent="login">
+            <form class="login" @submit.prevent="login">
                 <h1>Sign in</h1>
                 <label>User name</label>
-                <input required v-model="username" type="text" placeholder="Snoopy"/>
+                <input @input="changed" required v-model="username" type="text"/>
                 <label>Password</label>
-                <input required v-model="password" type="password" placeholder="Password"/>
+                <input @input="changed" required v-model="password" type="password"/>
                 <hr/>
                 <button type="submit">Login</button>
-            </form> -->
+            </form>
             <h3>Or use Google:</h3>
             <button class="google-btn btn btn-info log" @click="handleLogin()">Google</button>
             <!-- <a href='https://accounts.google.com/signin/oauth/identifier?client_id=856193954105-93249jrjql0dnv3bkii5fb1a59geidkr.apps.googleusercontent.com&as=kDWnQUm6Sv13wr05zaD_Pw&destination=http%3A%2F%2Flocalhost%3A8081&approval_state=!ChRwSmJEeTZtZ2NYeTY5VmprNF9RNhIfQXhqZjdTUVVuQjBac0NEZU1wUEotOVlaSlhuTGZoWQ%E2%88%99APNbktkAAAAAXCVXiDUdXAtOnRTJhN5gJB7nNG9nJTlT&oauthgdpr=1&xsrfsig=AHgIfE_IWnx3zi5kfXI7dNRLrLkQV0uA6g&flowName=GeneralOAuthFlow'</a> -->
@@ -43,6 +43,9 @@ export default {
     },
     handleLogin () {
       window.location = 'http://localhost:9082/auth/google'
+    },
+    changed (event) {
+      alert(event.target.value)
     }
   }
 }
