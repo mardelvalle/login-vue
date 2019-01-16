@@ -23,7 +23,7 @@ router.get('/google', passport.authenticate('google', {
 // hand control to passport to use code to grab profile info
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     console.log(req.user)
-    res.send('you reached the redirect URI');
+    res.redirect('localhost:9080/posts/add');
 });
 
 

@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import Navigation from './components/Navigation.vue'
+
 Vue.component('navigation', Navigation)
 
 Vue.config.productionTip = false
