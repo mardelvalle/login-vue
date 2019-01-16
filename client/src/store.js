@@ -5,14 +5,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    title: 'Hello Vue App'
+    userName: '',
+    password: ''
   },
   mutations: {
-    change (state, title) {
-      state.title = title
+    change (state, userName, password) {
+      state.userName = userName,
+      state.password = password
     }
   },
   getters: {
-    title: state => state.title
+    userName: state => state.userName,
+    password: state => state.password
   }
 })
