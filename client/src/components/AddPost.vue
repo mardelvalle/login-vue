@@ -30,12 +30,12 @@ export default {
     axios.get(`http://localhost:9082/posts`)
       .then(response => {
         if (response.data[0].authentication === false) {
-          console.log(this + "thing")
+          console.log(this + 'thing')
           // this.$router.push({
           //   name: 'signout'
           // })
         } else {
-          console.log(this + "pwen")
+          console.log(this + 'pwen')
           this.posts = response.data
         }
       })

@@ -6,7 +6,7 @@
       <li><a href="https://vuejs.org" target="_blank">Dashboard</a></li>
       <li><a href="https://forum.vuejs.org" target="_blank">Posts</a></li>
       <li><a href="https://chat.vuejs.org" target="_blank">Add</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Sign Out</a></li>
+      <li><a href="http://localhost:9082/logout">Sign Out</a></li>
       <br>
     </ul>
   </div>

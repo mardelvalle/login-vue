@@ -8,6 +8,7 @@ const keys = require('./config/keys')
 const passportSetup = require('./config/passport-setup.js')
 const cookieSession = require('cookie-session')
 const passport = require('passport')
+const path = require('path')
 
 const app = express()
 app.use(morgan('combined'))
@@ -44,26 +45,6 @@ mongoose.connect(keys.mongodb.dbURI, () => {
 
 app.use('/auth', authRoutes)
 
-app.get('/signout', (req, res) => {
-	res.send(
-		[{
-		  authentication: false
-		}]
-	  )
-})
-
-
-app.get('/posts', (req, res) => {
-	console.log("new" + res.user)
-  Post.find({}, 'title description', function (error, posts) {
-	  if (error) { console.error(error); }
-	  res.send({
-			posts: posts
-		})
-	}).sort({_id:-1})
-	console.log("re" + req.user)
-})
-
 app.post('/add_post', authCheck, (req, res) => {
 	var db = req.db;
 	var title = req.body.title;
@@ -82,9 +63,9 @@ app.post('/add_post', authCheck, (req, res) => {
 		})
 	})
 })
-app.get('/loggin', (req, res) => {
+app.get('/logout', (req, res) => {
 	req.logout();
-	res.redirect('/');
+	res.redirect('/signout');
 })
 
 app.put('/posts/:id', authCheck, (req, res) => {
@@ -124,6 +105,30 @@ app.get('/post/:id', authCheck, (req, res) => {
 	  if (error) { console.error(error); }
 	  res.send(post)
 	})
+})
+
+app.use( '/static', express.static( path.join( __dirname, '../../client/dist/static') ) );
+
+app.get( '/', passport.authenticate('google', { scope: ['profile'] } ), ( req, res ) => {
+	let filePath = path.join( __dirname, '../../client/dist/index.html' );
+	res.sendFile( filePath );
+});
+
+app.get('/signout', (req, res) => {
+	console.log(res.user)
+	let filePath = path.join( __dirname, '../../client/dist/index.html' );
+	res.sendFile( filePath );
+})
+
+app.get('/posts', authCheck, (req, res) => {
+	console.log("new" + res.user)
+  Post.find({}, 'title description', function (error, posts) {
+	  if (error) { console.error(error); }
+	  res.send({
+			posts: posts
+		})
+	}).sort({_id:-1})
+	console.log("re" + req.user)
 })
 
 app.listen(process.env.PORT || 9082)
